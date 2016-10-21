@@ -3,7 +3,11 @@
 
     <div class="columns">
       <div class="column"></div>
-      <div class="column" style="padding: 2%;"><search :cdnjs="cdnjs" :search="search"></search></div>
+      <div class="column" style="padding: 2%;">
+        <search
+        :cdnjs="cdnjs"
+        :addCode="addCode"
+        ></search></div>
       <div class="column"></div>
     </div>
 
@@ -19,7 +23,8 @@ export default {
   name: 'cdnjs',
   data () {
     return {
-      cdnjs: []
+      cdnjs: [],
+      strCode: ''
     }
   },
   computed: {},
@@ -30,9 +35,20 @@ export default {
     })
   },
   methods: {
-    search (searchText) {
-      var filter = this.cdnjs.filter(item => item.name === searchText)
-      console.log(filter)
+    addCode (cdnjs) {
+      console.log(cdnjs.split('.'))
+      var str = cdnjs.split('.')
+      if (str[str.length-1] === 'css') {
+        this.strCode = '<link rel=\"stylesheet" href=\"'+  cdnjs  +'\">'
+      } else if (str[str.length-1] === 'js') {
+        // this.strCode = '<script type=\"text/javascript\"src=\"'+ cdnjs +'\"><script>'
+        this.strCode = `<script type=\"text/javascript\"src=\"${cdnjs}\"><script>`
+        // this.copy(this.strCode)
+      }
+    },
+    copy (text) {
+      text.execCommand("Copy")
+      console.log(text)
     }
   },
   components: {

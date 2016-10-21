@@ -3,30 +3,34 @@
 
     <div class="navbar-item">
       <p class="control has-addons">
-        <input class="input" type="text" placeholder="Search" size="80" v-model="searchText">
-        <button class="button" @click="search(searchText)">
+        <input class="input" type="text" placeholder="Search" size="80" v-model="searchText" debounce="700">
+        <button class="button">
           Search
         </button>
       </p>
     </div>
     <hr>
 
-    <div v-repeat="cdnjs  | filterBy searchText">
+    <div v-for="(show, key) in cdnjs">
       {{show.name}}<br>
+      {{show.latest}}
+      <button class="button" @click="addCode(show.latest)">copy</button>
       <hr>
     </div>
+
 
   </div>
   </div>
 </template>
 
 <script>
+// var results = require('./../../itemData/cdnjs.js')
+
 export default {
   name: 'search',
   data () {
     return {
-      searchText: '',
-      data: []
+      searchText: ''
     }
   },
   computed: {},
@@ -34,7 +38,7 @@ export default {
   },
   methods: {},
   components: {},
-  props: ['cdnjs', 'search']
+  props: ['cdnjs', 'addCode']
 }
 </script>
 
